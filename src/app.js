@@ -1,13 +1,31 @@
-const path = require('path');
+const path = require("path");
 const express = require("express");
 
 console.log(__dirname);
 console.log(__filename);
-console.log(path.join(__dirname,'../public'));
+console.log(path.join(__dirname, "../public"));
 
-const publicDirectory = path.join(__dirname,'../public');
+const publicDirectory = path.join(__dirname, "../public");
 
 const app = express();
+app.set("view engine", "hbs");
+
+// setup route
+
+app.get("", (req, res) => {
+  res.render("index", { title: "weather app", name: "Andres Cubillos " });
+});
+
+app.get("/about", (req, res) => {
+  res.render("about", {
+    title: "this is the about page",
+    description: "here you can meet us",
+  });
+});
+
+app.get('/help', (req,res)=>{
+  res.render('help',{contact: '328997766'})
+})
 
 app.use(express.static(publicDirectory));
 
@@ -17,9 +35,8 @@ app.use(express.static(publicDirectory));
 //   res.send("<h1> weather </h1>");
 // });
 
-
 app.get("/weather", (req, res) => {
-  res.send({location: 'Cali', weather: 'sunny'});
+  res.send({ location: "Cali", weather: "sunny" });
 });
 
 // start the server up
