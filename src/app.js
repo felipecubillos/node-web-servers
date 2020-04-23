@@ -50,18 +50,27 @@ app.get("/help", (req, res) => {
 // });
 
 app.get("/weather", (req, res) => {
-  res.send({ location: "Cali", weather: "sunny", name: "Andres Cubillos" });
+  // get parameters
+  if (!req.query.address) {
+    return res.send({ error: "You must provive an address" });
+  }
+  res.send({
+    location: "Cali",
+    weather: "sunny",
+    name: "Andres Cubillos",
+    address: req.query.address,
+  });
 });
 
-app.get('/help/*', (req,res)=>{
+app.get("/help/*", (req, res) => {
   //res.send('Help article not found');
-  res.render('error' ,{message: 'Sorry!!!, that page does not exist.'})
-})
+  res.render("error", { message: "Sorry!!!, that page does not exist." });
+});
 
 // 404 error page
-app.get('*', (req,res)=>{
-  res.render('error' ,{message: 'Sorry!!!, that page does not exist.'})
-})
+app.get("*", (req, res) => {
+  res.render("error", { message: "Sorry!!!, that page does not exist." });
+});
 
 // start the server up
 app.listen(3000, () => {
