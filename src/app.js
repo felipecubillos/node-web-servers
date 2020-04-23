@@ -53,8 +53,17 @@ app.get("/weather", (req, res) => {
   res.send({ location: "Cali", weather: "sunny", name: "Andres Cubillos" });
 });
 
-// start the server up
+app.get('/help/*', (req,res)=>{
+  //res.send('Help article not found');
+  res.render('error' ,{message: 'Sorry!!!, that page does not exist.'})
+})
 
+// 404 error page
+app.get('*', (req,res)=>{
+  res.render('error' ,{message: 'Sorry!!!, that page does not exist.'})
+})
+
+// start the server up
 app.listen(3000, () => {
   console.log("server is up on port 3000");
 });
