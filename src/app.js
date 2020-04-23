@@ -2,6 +2,9 @@ const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
 
+const getCoordenates = require('./utils/geocode')
+const forecast = require('./utils/forecast.js');
+
 console.log(__dirname);
 console.log(__filename);
 console.log(path.join(__dirname, "../public"));
@@ -54,13 +57,32 @@ app.get("/weather", (req, res) => {
   if (!req.query.address) {
     return res.send({ error: "You must provive an address" });
   }
-  res.send({
-    location: "Cali",
-    weather: "sunny",
-    name: "Andres Cubillos",
-    address: req.query.address,
+
+  getCoordenates(req.query.address, (error, data) => {
+    if(error){
+        return res.render("error", { message: "Sorry!!!, we could not find the address" });
+    }
+  
+    forecast(data.latitude,data.longitude,(error,forecastData)=>{
+      if(error){
+          return console.log(error)
+      }
+      console.log(data.location);
+      console.log(forecastData);
+
+      res.send({
+        location: data.location,
+        weather: forecastData.weather,
+        name: "Andres Cubillos",
+        address: req.query.address,
+      });
+    });
+
+  })
+  
   });
-});
+
+  
 
 app.get("/help/*", (req, res) => {
   //res.send('Help article not found');
