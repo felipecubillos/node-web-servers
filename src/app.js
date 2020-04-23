@@ -67,8 +67,8 @@ app.get("/weather", (req, res) => {
       if(error){
           return console.log(error)
       }
-      console.log(data.location);
-      console.log(forecastData);
+      //console.log(data.location);
+      //console.log(forecastData);
 
       res.send({
         location: data.location,

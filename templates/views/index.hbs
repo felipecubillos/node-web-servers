@@ -4,18 +4,27 @@
 <head>
     <title>index</title>
     <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/app.js"></script>
+    
 </head>
 
 <body>
     <div class="main-content">
         {{>header}}
         <p>use this site to get your weather</p>
+
+        <form action="">
+            <input placeholder="Location" type="text">
+            <button> Search</button>
+        </form>
     </div>
+    <p id="message-1"></p>
+    <p id="message-2"></p>
+
 
     <img class="portrait" src="./img/santiago_de_cali.png">
 
     {{>footer}}
+    <script src="./js/app.js"></script>
 </body>
 
 </html>
