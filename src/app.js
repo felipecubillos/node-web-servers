@@ -5,13 +5,20 @@ console.log(__dirname);
 console.log(__filename);
 console.log(path.join(__dirname, "../public"));
 
-const publicDirectory = path.join(__dirname, "../public");
-
 const app = express();
+
+// Define paths for express config
+const publicDirectory = path.join(__dirname, "../public");
+const viewsPath = path.join(__dirname, "../templates");
+
+// setup handlebars engine and views locations
 app.set("view engine", "hbs");
+app.set("views", viewsPath);
 
-// setup route
+// setup static directory to serve
+app.use(express.static(publicDirectory));
 
+// defining routes
 app.get("", (req, res) => {
   res.render("index", { title: "weather app", name: "Andres Cubillos " });
 });
@@ -23,11 +30,9 @@ app.get("/about", (req, res) => {
   });
 });
 
-app.get('/help', (req,res)=>{
-  res.render('help',{contact: '328997766'})
-})
-
-app.use(express.static(publicDirectory));
+app.get("/help", (req, res) => {
+  res.render("help", { contact: "328997766" });
+});
 
 // configuring routes
 // return html or json
